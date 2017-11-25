@@ -10,10 +10,6 @@ public interface MyTubeInterface extends Remote {
 
     String getContentFromTitle(String title) throws RemoteException;
 
-    byte[] downloadSpecificContent(String id, String title, String user) throws RemoteException;
-
-    byte[] downloadDistributedContent(String id, String title, String user) throws RemoteException;
-
     String getTitleFromKey(int key) throws RemoteException;
 
     List<String> searchFromKeyword(String keyword) throws RemoteException;
@@ -33,10 +29,6 @@ public interface MyTubeInterface extends Remote {
     void addCallback(MyTubeCallbackInterface callbackObject) throws RemoteException;
 
     void removeCallback(MyTubeCallbackInterface callbackObject) throws RemoteException;
-
-    List<String> showAllDistributedContent() throws RemoteException;
-
-    List<String> searchDistributedFromKeyword(String keyword) throws RemoteException;
 
     boolean isValidID(int ID) throws RemoteException;
 }

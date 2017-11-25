@@ -19,9 +19,6 @@ public class Printer {
                 "3: List the available content\n" +
                 "4: Search by keyWord\n" +
                 "5: Delete Content\n" +
-                "6: Modify Content\n" +
-                "7: List content from all the servers \n" +
-                "8: Search all the servers by keyword\n" +
-                "9: Download distributed content");
+                "6: Modify Content\n");
     }
 }

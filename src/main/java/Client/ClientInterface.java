@@ -12,10 +12,4 @@ public interface ClientInterface {
     void modifyContent() throws RemoteException;
     void exit();
     void upload(String contentPath, String description);
-
-    //Distributed Methods
-    void showAllDistrubutedContent() throws RemoteException;
-    void searchDistributedFromKeyword(String keyword) throws RemoteException;
-    void downloadDistributedContent(String id, String title, String user) throws RemoteException;
-
 }

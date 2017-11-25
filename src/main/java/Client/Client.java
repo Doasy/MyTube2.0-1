@@ -1,13 +1,14 @@
 package main.java.Client;
 
-import ServerInterfaceImpl.*;
-import ServerRemoteInterface.MyTubeCallbackInterface;
-import ServerRemoteInterface.MyTubeInterface;
-import Utils.*;
+
+
+import main.java.ServerInterfaceImpl.MyTubeCallbackImpl;
+import main.java.ServerRemoteInterface.MyTubeCallbackInterface;
+import main.java.ServerRemoteInterface.MyTubeInterface;
+import main.java.Utils.*;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.Reader;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
@@ -133,46 +134,6 @@ public class Client implements ClientInterface{
         }
     }
 
-    //Distributed Methods
-    @Override
-    public void showAllDistrubutedContent() throws RemoteException {
-        List<String> ownFiles = stub.searchAll();
-        List<String> distrubutedFiles = stub.showAllDistributedContent();
-        List<String> toShow = new ArrayList<>();
-        for(String files: distrubutedFiles){
-            if(!ownFiles.contains(files)){
-                toShow.add(files);
-            }
-        }
-        Printer.printLists(toShow);
-    }
-
-    @Override
-    public void searchDistributedFromKeyword(String keyword) throws RemoteException{
-        List<String> ownFiles = stub.searchFromKeyword(keyword);
-        List<String> distrubutedFiles = stub.searchDistributedFromKeyword(keyword);
-        List<String> toShow = new ArrayList<>();
-        for(String files: distrubutedFiles){
-            if(!ownFiles.contains(files)){
-                toShow.add(files);
-            }
-        }
-        Printer.printLists(toShow);
-    }
-
-    @Override
-    public void downloadDistributedContent(String id, String title, String user) throws RemoteException {
-        String home = System.getProperty("user.home");
-        try {
-            byte[] filedata = stub.downloadDistributedContent(id, title, user);
-            System.out.println("Downloading in directory " + home + "/Downloads/" + title);
-            FileAssembler.fileAssembler(home, filedata, title);
-
-        } catch (IOException e) {
-            ExceptionMessageThrower.ioExceptionMessage(e);
-        }
-    }
-
     //Others
     private void downloadWhitID() throws RemoteException {
         int id = Integer.parseInt(Reader.idReader());
@@ -236,7 +197,7 @@ public class Client implements ClientInterface{
             }
             Registry registry = LocateRegistry.getRegistry(ip, port);
             stub = (MyTubeInterface) registry.lookup(rmi_name);
-            callbackObject = new MyTubeCallbackImpl();
+            callbackObject = (MyTubeCallbackInterface) new MyTubeCallbackImpl();
             stub.addCallback(callbackObject);
             System.out.println("MyTube client connected on: "+  rmi_name);
         } catch (RemoteException ex) {
@@ -283,19 +244,6 @@ public class Client implements ClientInterface{
                     break;
                 case 6:
                     client.modifyContent();
-                    break;
-                case 7:
-                    client.showAllDistrubutedContent();
-                    break;
-                case 8:
-                    keyword = Reader.keywordReader();
-                    client.searchDistributedFromKeyword(keyword);
-                    break;
-                case 9:
-                    String id = Reader.idReader();
-                    String title = Reader.titleReader();
-                    String uploader = Reader.uploaderReader();
-                    client.downloadDistributedContent(id, title, uploader);
                     break;
                 default:
                     System.out.println("Incorrect Option.");

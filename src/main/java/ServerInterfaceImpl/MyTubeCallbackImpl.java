@@ -1,6 +1,6 @@
 package main.java.ServerInterfaceImpl;
 
-import ServerRemoteInterface.MyTubeCallbackInterface;
+import main.java.ServerRemoteInterface.MyTubeCallbackInterface;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
