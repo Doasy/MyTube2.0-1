@@ -10,6 +10,8 @@ import javax.ws.rs.core.Response;
 
 //import myRESTwsBean.BeanJSon;
 
+/*-----API DEFINITION >>>>>>>> https://app.swaggerhub.com/apis/HumbertValles/MyTube/1.0.0-----*/
+
 @Path("")
 public class API {
     /*-------SERVER-------*/
