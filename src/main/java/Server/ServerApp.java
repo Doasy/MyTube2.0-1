@@ -1,8 +1,8 @@
-package main.java.Server;
+package Server;
 
-import main.java.ServerInterfaceImpl.MyTubeImpl;
-import main.java.Utils.Reader;
-import main.java.Utils.Registrator;
+import Server.ServerInterfaceImpl.MyTubeImpl;
+import Server.Utils.*;
+
 
 import java.io.IOException;
 import java.net.UnknownHostException;
@@ -11,7 +11,7 @@ import java.rmi.RemoteException;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 
-public class Server {
+public class ServerApp {
     private MyTubeImpl stub;
     private Registry registry;
     private final String host;
@@ -26,13 +26,13 @@ public class Server {
     }
 
     /**
-     * Creates a Server instance
+     * Creates a ServerApp instance
      *
      * @param host the server waits for client connections on this IP
      * @param port port where the server listens for client petitions
      * @param registryName name of the registered service on RMI Registry
      */
-    private Server(String host, int port, String registryName) throws IOException {
+    private ServerApp(String host, int port, String registryName) throws IOException {
         this.host = host;
         this.port = port;
         this.registryName = registryName;
@@ -51,11 +51,11 @@ public class Server {
 
         String registryName = "MyTube";
 
-        //Reads Server Info
+        //Reads ServerApp Info
         String ownIP = Reader.ipServerReader();
         int ownPort = Reader.portServerReader();
 
-        final Server s = new Server(ownIP, ownPort, registryName);
+        final ServerApp s = new ServerApp(ownIP, ownPort, registryName);
 
         final Thread mainThread = Thread.currentThread();
         Runtime.getRuntime().addShutdownHook(new Thread() {
@@ -80,20 +80,20 @@ public class Server {
     }
 
     /**
-     * Stopps the Server
+     * Stopps the ServerApp
      */
     private static void stopServer(Registry registry, String registryName, MyTubeImpl stub) throws RemoteException {
         try{
             registry.unbind(registryName);
             UnicastRemoteObject.unexportObject(stub, true);
-            System.out.println("Server stopped correctly");
+            System.out.println("ServerApp stopped correctly");
         } catch (Exception ex) {
-            System.err.println("Server failed on stop");
+            System.err.println("ServerApp failed on stop");
         }
     }
 
     /**
-     * Runs the Server
+     * Runs the ServerApp
      */
     private void runServer() {
         try {
@@ -105,9 +105,9 @@ public class Server {
             stub = new MyTubeImpl();
             registry = Registrator.getRegistry(host, port);
             registry.rebind(registryName, stub);
-            System.out.println("MyTube Server ready on: " + registryURL);
+            System.out.println("MyTube ServerApp ready on: " + registryURL);
         } catch (Exception ex) {
-            System.err.println("Server error: " + ex.toString());
+            System.err.println("ServerApp error: " + ex.toString());
         }
     }
 
