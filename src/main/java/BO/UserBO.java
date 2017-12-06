@@ -4,7 +4,7 @@ import javax.persistence.Column;
 import javax.persistence.Id;
 import java.io.Serializable;
 
-public class User implements Serializable{
+public class UserBO implements Serializable{
      @Id
     private int id;
     @Column(name = "username")

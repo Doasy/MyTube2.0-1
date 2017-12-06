@@ -11,7 +11,7 @@ import java.io.Serializable;
 @Entity
 @Table(name = "server")
 
-public class Server implements Serializable{
+public class ServerBO implements Serializable{
     @Id
     int id;
     @Column(name = "port")
