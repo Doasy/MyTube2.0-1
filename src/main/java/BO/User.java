@@ -1,9 +1,16 @@
 package BO;
 
-public class User {
-    int id;
-    String username;
-    String password;
+import javax.persistence.Column;
+import javax.persistence.Id;
+import java.io.Serializable;
+
+public class User implements Serializable{
+     @Id
+    private int id;
+    @Column(name = "username")
+    private String username;
+    @Column(name = "password")
+    private String password;
 
     public int getId() {
         return id;

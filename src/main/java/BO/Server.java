@@ -5,12 +5,13 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
+import java.io.Serializable;
 
 @XmlRootElement
 @Entity
 @Table(name = "server")
 
-public class Server {
+public class Server implements Serializable{
     @Id
     int id;
     @Column(name = "port")
