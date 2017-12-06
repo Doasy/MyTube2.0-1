@@ -1,6 +1,11 @@
 package BO;
 
-public class Content {
+import java.io.Serializable;
+import javax.persistence.Column;
+import javax.persistence.Id;
+
+public class Content implements Serializable{
+    @Id
     int id;
     String title;
     String description;

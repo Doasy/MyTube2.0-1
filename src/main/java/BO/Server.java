@@ -1,8 +1,21 @@
 package BO;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.xml.bind.annotation.XmlRootElement;
+
+@XmlRootElement
+@Entity
+@Table(name = "server")
+
 public class Server {
+    @Id
     int id;
+    @Column(name = "port")
     int port;
+    @Column(name = "host")
     String host;
 
     public int getId() {
