@@ -1,19 +1,16 @@
-package main.java.ServerInterfaceImpl;
+package Server.ServerInterfaceImpl;
 
-import main.java.Server.Server;
-import main.java.ServerRemoteInterface.MyTubeCallbackInterface;
-import main.java.ServerRemoteInterface.MyTubeInterface;
+import Server.ServerRemoteInterface.MyTubeCallbackInterface;
+import Server.ServerRemoteInterface.MyTubeInterface;
 
 import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.TransformerException;
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+
 
 /***
  * AQUI ANAE LA BASE DE DADES XML QUE PASSARA A SER UNA SQL.
