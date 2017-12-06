@@ -7,9 +7,13 @@ import javax.persistence.Id;
 public class Content implements Serializable{
     @Id
     int id;
+    @Column(name = "title")
     String title;
+    @Column(name = "description")
     String description;
+    @Column(name = "user_id")
     String uploader;
+    @Column(name = "server_id")
     int serverId;
 
     public int getId() {
