@@ -1,6 +1,7 @@
-package main.java.ServerInterfaceImpl;
+package Server.ServerInterfaceImpl;
 
-import main.java.ServerRemoteInterface.MyTubeCallbackInterface;
+
+import Server.ServerRemoteInterface.MyTubeCallbackInterface;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
@@ -18,7 +19,7 @@ public class MyTubeCallbackImpl extends UnicastRemoteObject implements MyTubeCal
 
     @Override
     public void notifyServerStopped() throws RemoteException {
-        System.out.print("Server stopped");
+        System.out.print("ServerApp stopped");
         System.exit(0);
     }
 }
