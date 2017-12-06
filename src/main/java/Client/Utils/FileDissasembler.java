@@ -1,4 +1,4 @@
-package main.java.Utils;
+package Client.Utils;
 
 import java.io.BufferedInputStream;
 import java.io.File;

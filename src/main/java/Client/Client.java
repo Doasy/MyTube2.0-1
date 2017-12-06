@@ -1,11 +1,7 @@
-package main.java.Client;
+package Client;
 
+import Client.Utils.*;
 
-
-import main.java.ServerInterfaceImpl.MyTubeCallbackImpl;
-import main.java.ServerRemoteInterface.MyTubeCallbackInterface;
-import main.java.ServerRemoteInterface.MyTubeInterface;
-import main.java.Utils.*;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -16,8 +12,12 @@ import java.rmi.registry.Registry;
 import java.util.ArrayList;
 import java.util.List;
 
+import Server.ServerInterfaceImpl.MyTubeCallbackImpl;
+import Server.ServerRemoteInterface.MyTubeCallbackInterface;
+import Server.ServerRemoteInterface.MyTubeInterface;
 
-public class Client implements ClientInterface{
+
+public class Client implements ClientInterface {
     private int port;
     private String ip;
     private String rmi_name;
@@ -32,7 +32,7 @@ public class Client implements ClientInterface{
         this.rmi_name = "MyTube";
     }
 
-    //Server Connected Methods
+    //ServerApp Connected Methods
     @Override
     public void exit() {
         System.out.print("Disconnecting from the server...");
@@ -264,7 +264,7 @@ public class Client implements ClientInterface{
             options(client);
         }
         catch (Exception e) {
-            System.out.println("Exception in Client: "+  e);
+            System.out.println("Exception in User: "+  e);
         }
     }
 }

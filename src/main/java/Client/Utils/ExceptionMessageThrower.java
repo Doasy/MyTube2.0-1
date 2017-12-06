@@ -1,4 +1,4 @@
-package main.java.Utils;
+package Client.Utils;
 
 public class ExceptionMessageThrower {
 
