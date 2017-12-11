@@ -10,4 +10,5 @@ public class UserDAO {
     public int insertNewUser(UserBO userBo){
         return postrgres.insertNewUser(userBo);
     }
+
 }
