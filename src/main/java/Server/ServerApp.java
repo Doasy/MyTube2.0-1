@@ -5,6 +5,9 @@ import Server.Utils.*;
 
 
 import java.io.IOException;
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.net.UnknownHostException;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
@@ -48,6 +51,15 @@ public class ServerApp {
 
 
     public static void main(String args[]) throws IOException, NotBoundException {
+        URL url = new URL("http://localhost:8080/MyTube2.0/user/new");
+        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+        conn.setDoOutput(true);
+        conn.setRequestMethod("POST");
+        conn.setRequestProperty("Content-Type", "application/json");
+        String input = "{\"name\":\"nom\",\"password\":\"pass\"}";
+        OutputStream os = conn.getOutputStream();
+        os.write(input.getBytes());
+        os.flush();
 
         String registryName = "MyTube";
 
@@ -102,6 +114,8 @@ public class ServerApp {
             if (System.getSecurityManager() == null) {
                 System.setSecurityManager(new SecurityManager());
             }
+
+
             stub = new MyTubeImpl();
             registry = Registrator.getRegistry(host, port);
             registry.rebind(registryName, stub);

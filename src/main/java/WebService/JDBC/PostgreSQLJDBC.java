@@ -1,6 +1,8 @@
 package WebService.JDBC;
 
 
+import WebService.BO.UserBO;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -33,15 +35,17 @@ public class PostgreSQLJDBC {
         System.out.println("Closed database successfully");
     }
 
-    public void insertNewUser(String userName, String password){
+    public int insertNewUser(UserBO user){
         Statement stmt;
         try {
             stmt = c.createStatement();
             String sql = "INSERT INTO user (username, password) "
-                    + "VALUES ('"+userName+"', '"+password+"');";
+                    + "VALUES ('"+user.getUsername()+"', '"+user.getPassword()+"');";
             stmt.executeUpdate(sql);
+            return 1;
         } catch (SQLException e) {
             System.err.println("problem executing the query");
+            return -1;
         }
     }
 }

@@ -1,22 +1,38 @@
 package WebService.ApiService;
 
-import WebService.RestBean.BeanJson;
+import WebService.BO.UserBO;
+import WebService.DAO.UserDAO;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.*;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-public class User {
+@Path("/user")
+public class User{
 
-    @Path("/user/new")
+    UserDAO userDao = new UserDAO();
+    private static final String SUCCESS_RESULT="{ \"result\": \"succes\" }";
+    private static final String FAILURE_RESULT="{ \"result\": \"failure\" }";
+
+    @Path("/new")
     @POST
-    public Response signUser(BeanJson bean) {
-        /*String resultat = bean.getNom();
-        return Response.status(201).entity(resultat).build();*/
-        return null;
+    public String signUser(@FormParam("username") String username,
+                             @FormParam("password") String password,
+                             @Context HttpServletResponse servletResponse) {
+        UserBO userBo = new UserBO();
+        userBo.setUsername(username);
+        userBo.setPassword(password);
+
+        int result = userDao.insertNewUser(userBo);
+        if(result == 1){
+            return SUCCESS_RESULT;
+        }
+        return FAILURE_RESULT;
     }
 
-    @Path("/user/{userID}/content")
+    @Path("/{userID}/content")
     @GET
     //Si volem XML tmb es pot
     @Produces(MediaType.APPLICATION_JSON)
@@ -24,7 +40,7 @@ public class User {
         return null;
     }
 
-    @Path("/user/{userID}")
+    @Path("/{userID}")
     @GET
     //Si volem XML tmb es pot
     @Produces(MediaType.APPLICATION_JSON)
