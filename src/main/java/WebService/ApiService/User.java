@@ -18,12 +18,7 @@ public class User{
 
     @Path("/new")
     @POST
-    public String signUser(@FormParam("username") String username,
-                             @FormParam("password") String password,
-                             @Context HttpServletResponse servletResponse) {
-        UserBO userBo = new UserBO();
-        userBo.setUsername(username);
-        userBo.setPassword(password);
+    public String signUser(UserBO userBo) {
 
         int result = userDao.insertNewUser(userBo);
         if(result == 1){
