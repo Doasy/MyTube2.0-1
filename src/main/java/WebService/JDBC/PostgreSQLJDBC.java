@@ -3,10 +3,7 @@ package WebService.JDBC;
 
 import WebService.BO.UserBO;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 
 public class PostgreSQLJDBC {
     Connection c = null;
@@ -46,6 +43,26 @@ public class PostgreSQLJDBC {
         } catch (SQLException e) {
             System.err.println("problem executing the query");
             return -1;
+        }
+    }
+
+    public UserBO getUserById(int id){
+        Statement stmt;
+        try {
+            stmt = c.createStatement();
+            String sql = "SELECT * FROM user WHERE id = "+id+";";
+            ResultSet rs =stmt.executeQuery(sql);
+            UserBO userBO = new UserBO();
+            while (rs.next()) {
+                userBO.setId(Integer.parseInt(rs.getString("id")));
+                userBO.setUsername(rs.getString("username"));
+                userBO.setPassword(rs.getString("password"));
+            }
+            return userBO;
+
+        } catch (SQLException e) {
+            System.err.println("problem executing the query");
+            return null;
         }
     }
 }
