@@ -36,7 +36,7 @@ public class PostgreSQLJDBC {
         Statement stmt;
         try {
             stmt = c.createStatement();
-            String sql = "INSERT INTO user (username, password) "
+            String sql = "INSERT INTO myTube_user (username, password) "
                     + "VALUES ('"+user.getUsername()+"', '"+user.getPassword()+"');";
             stmt.executeUpdate(sql);
             return 1;
@@ -50,7 +50,7 @@ public class PostgreSQLJDBC {
         Statement stmt;
         try {
             stmt = c.createStatement();
-            String sql = "SELECT * FROM user WHERE id = "+id+";";
+            String sql = "SELECT * FROM myTube_user WHERE id = "+id+";";
             ResultSet rs =stmt.executeQuery(sql);
             UserBO userBO = new UserBO();
             while (rs.next()) {

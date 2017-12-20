@@ -68,4 +68,14 @@ public class Reader {
         System.out.println("Do you know the file ID (Yy/Nn)?");
         return scanner.nextLine();
     }
+
+    public static String userLoginReader(){
+        System.out.println("Do you have an account? (Yy/Nn)");
+        return scanner.nextLine();
+    }
+
+    public static String userPasswordReader(){
+        System.out.println("Write your password.");
+        return scanner.nextLine();
+    }
 }

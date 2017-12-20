@@ -14,6 +14,8 @@ import java.rmi.RemoteException;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 
+import static javax.ws.rs.core.HttpHeaders.USER_AGENT;
+
 public class ServerApp {
     private MyTubeImpl stub;
     private Registry registry;
@@ -21,7 +23,7 @@ public class ServerApp {
     private final int port;
     private final String registryName;
     private final String registryURL;
-
+    private static final String URL = "http://0bca118c.ngrok.io/MyTube2.0Web/rest/user/new/";
 
     private static void threadLauncher() throws UnknownHostException {
         Thread theThread = new Thread();
@@ -51,16 +53,6 @@ public class ServerApp {
 
 
     public static void main(String args[]) throws IOException, NotBoundException {
-        URL url = new URL("http://localhost:8080/MyTube2.0/user/new");
-        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-        conn.setDoOutput(true);
-        conn.setRequestMethod("POST");
-        conn.setRequestProperty("Content-Type", "application/json");
-        String input = "{\"name\":\"nom\",\"password\":\"pass\"}";
-        OutputStream os = conn.getOutputStream();
-        os.write(input.getBytes());
-        os.flush();
-
         String registryName = "MyTube";
 
         //Reads ServerApp Info
@@ -132,4 +124,6 @@ public class ServerApp {
     private MyTubeImpl getStub(){
         return this.stub;
     }
+
+
 }
