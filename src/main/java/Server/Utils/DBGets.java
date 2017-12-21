@@ -9,9 +9,9 @@ import java.net.URL;
 import static javax.ws.rs.core.HttpHeaders.USER_AGENT;
 
 
-public class DBGets {
-    private static final String SHOWALLCONTENTURL = "http://localhost:8080/MyTube2.0Web/rest/content/";
-    private static final String SHOWALLSERVERSURL = "http://localhost:8080/MyTube2.0Web/rest/server/";
+public class DBGets extends DBGenerics{
+    private static final String SHOWALLCONTENTURL = GENERICURL + "content/";
+    private static final String SHOWALLSERVERSURL = GENERICURL + "server/";
 
     private static HttpURLConnection httpConnection(String urlString) throws IOException {
         URL url = new URL(urlString);
@@ -26,38 +26,29 @@ public class DBGets {
     }
 
     public static String getAllContent() {
-        String contentString = "";
-
-        try {
-            HttpURLConnection conn = httpConnection(SHOWALLCONTENTURL);
-
-            BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-            contentString = br.readLine();
-
-            br.close();
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
+        String contentString = getAll(SHOWALLCONTENTURL);
         return contentString;
     }
 
     public static String getAllServers(){
-        String serversStringJson = "";
+        String serversStringJson = getAll(SHOWALLSERVERSURL);
+        return serversStringJson;
+    }
+
+    private static String getAll(String URL) {
+        String resultString = "";
         try {
-            HttpURLConnection conn = httpConnection(SHOWALLSERVERSURL);
+            HttpURLConnection conn = httpConnection(URL);
 
             BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-            serversStringJson = br.readLine();
+            resultString = br.readLine();
 
             br.close();
 
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-        return serversStringJson;
+        return resultString;
     }
 
 }

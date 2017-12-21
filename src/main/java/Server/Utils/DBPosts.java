@@ -1,6 +1,5 @@
 package Server.Utils;
 
-import Client.Utils.*;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -12,8 +11,8 @@ import java.net.URL;
 import static javax.ws.rs.core.HttpHeaders.USER_AGENT;
 
 
-public class DBPosts {
-    private static final String SIGNUPSERVERURL = "http://localhost:8080/MyTube2.0Web/rest/server/new";
+public class DBPosts extends DBGenerics{
+    private static final String SIGNUPSERVERURL = GENERICURL +"server/new";
 
     private static HttpURLConnection httpConnection(String urlString) throws IOException {
         URL url = new URL(urlString);
