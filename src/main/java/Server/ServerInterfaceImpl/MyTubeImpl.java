@@ -4,9 +4,12 @@ import ClassesBO.ContentBO;
 import Server.ServerRemoteInterface.MyTubeCallbackInterface;
 import Server.ServerRemoteInterface.MyTubeInterface;
 import Server.Utils.DBGets;
+import Server.Utils.DBPosts;
+import Server.Utils.FileAssembler;
 import Server.Utils.Validator;
 
 
+import javax.validation.Valid;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.*;
 import java.net.*;
@@ -20,11 +23,9 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import static javax.ws.rs.core.HttpHeaders.USER_AGENT;
 
 
 public class MyTubeImpl extends UnicastRemoteObject implements MyTubeInterface {
-    private static final String  UPLOADCONTENTURL = "http://0bca118c.ngrok.io/MyTube2.0Web/rest/content";
     private Set<MyTubeCallbackInterface> callbackObjects;
 
     public MyTubeImpl() throws IOException, ParserConfigurationException {
@@ -57,25 +58,22 @@ public class MyTubeImpl extends UnicastRemoteObject implements MyTubeInterface {
     }
 
     @Override
-    public synchronized String uploadContent(String title, String description, byte[] fileData, String userName) throws RemoteException {
-        URL url;
+    public synchronized String uploadContent(byte[] content, String ip, int port,  String userId, String title, String description) throws RemoteException {
+        String serversList = DBGets.getAllServers();
+        int idServer = Validator.checkServerCredentials(ip, Integer.toString(port), serversList);
+        DBPosts.uploadServer(Integer.toString(idServer), userId, title, description);
+
+        String allContent = DBGets.getAllContent();
+        int idContent = Validator.selectSpecificContent(allContent, title, Integer.parseInt(userId), idServer);
+        String pathOfFile = "./server01/" + Integer.toString(idContent) + "/";
         try {
-            url = new URL(UPLOADCONTENTURL);
-            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-            conn.setDoOutput(true);
-            conn.setRequestMethod("POST");
-            conn.setRequestProperty("Content-Type", "application/json");
-            conn.setRequestProperty("User-Agent", USER_AGENT);
-
-            String input = "{\"username\":\"ngrok\",\"password\":\"iPad 4\"}";
-
-            OutputStream os = conn.getOutputStream();
-            os.write(input.getBytes());
-            os.flush();
+            Runtime.getRuntime().exec("mkdir ./server01/" + Integer.toString(idContent));
+            FileAssembler.fileAssembler(pathOfFile, content, title);
+            return "File Uploaded Succesfully";
         } catch (IOException e) {
             e.printStackTrace();
+            return "Error Uploading File";
         }
-        return null;
     }
 
     @Override

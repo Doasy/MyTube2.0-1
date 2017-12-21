@@ -14,7 +14,7 @@ public interface MyTubeInterface extends Remote {
 
     List<String> showOwnFiles(String username) throws RemoteException;
 
-    String uploadContent(String title, String description, byte[] fileData, String userName) throws RemoteException;
+    String uploadContent(byte[] content, String ip, int port,  String userId, String title, String description) throws RemoteException;
 
     String modifyContent(String id, String title, String description) throws RemoteException;
 

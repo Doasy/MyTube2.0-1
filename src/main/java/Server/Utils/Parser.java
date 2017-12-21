@@ -26,4 +26,16 @@ public class Parser {
         Gson gson = new Gson();
         return gson.fromJson(contentStringJson, ContentBO[].class);
     }
+
+    public static String contentToJsonRegister(String serverId, String userId, String title, String description){
+        Gson gson = new Gson();
+        ContentBO contentBO = new ContentBO();
+
+        contentBO.setServerId(Integer.parseInt(serverId));
+        contentBO.setUploader(Integer.parseInt(userId));
+        contentBO.setTitle(title);
+        contentBO.setDescription(description);
+
+        return gson.toJson(contentBO);
+    }
 }
