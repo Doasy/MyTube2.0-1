@@ -6,32 +6,15 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
-import java.net.URL;
-
-import static javax.ws.rs.core.HttpHeaders.USER_AGENT;
 
 
 public class DBPosts extends DBGenerics{
-    private static final String SIGNUPSERVERURL = GENERICURL +"server/new";
+    private static final String SIGN_UP_SERVER_URL = GENERIC_URL +"server/new";
 
-    private static HttpURLConnection httpConnection(String urlString) throws IOException {
-        URL url = new URL(urlString);
-        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-
-        conn.setDoInput(true);
-        conn.setDoOutput(true);
-        conn.setRequestMethod("POST");
-
-        conn.setRequestProperty("User-Agent", USER_AGENT);
-        conn.setRequestProperty("Content-Type", "application/json");
-        conn.setRequestProperty("Accept-Language", "UTF-8");
-
-        return conn;
-    }
 
     public static void registerServer(String ip, String port){
         try {
-            HttpURLConnection conn = httpConnection(SIGNUPSERVERURL);
+            HttpURLConnection conn = httpConnection(SIGN_UP_SERVER_URL, "POST");
             String loginJson = Server.Utils.Parser.serverToJsonRegister(ip, port);
 
             OutputStream os = conn.getOutputStream();
