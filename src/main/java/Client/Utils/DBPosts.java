@@ -10,7 +10,7 @@ import static javax.ws.rs.core.HttpHeaders.USER_AGENT;
 
 
 public class DBPosts {
-    private static final String SIGNUPUSERURL = "http://localhost:8080/MyTube2.0Web/rest/user/new";
+    private static final String SIGNUPUSERURL = "http://4f67e3c6.ngrok.io/MyTube2.0Web/rest/user/new";
 
     private static HttpURLConnection httpConnection(String urlString) throws IOException {
         URL url = new URL(urlString);

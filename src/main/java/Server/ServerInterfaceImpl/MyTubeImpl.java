@@ -22,7 +22,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-
+import java.util.concurrent.TimeUnit;
 
 
 public class MyTubeImpl extends UnicastRemoteObject implements MyTubeInterface {
@@ -62,7 +62,11 @@ public class MyTubeImpl extends UnicastRemoteObject implements MyTubeInterface {
         String serversList = DBGets.getAllServers();
         int idServer = Validator.checkServerCredentials(ip, Integer.toString(port), serversList);
         DBPosts.uploadServer(Integer.toString(idServer), userId, title, description);
-
+        try {
+            TimeUnit.SECONDS.sleep(1);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         String allContent = DBGets.getAllContent();
         int idContent = Validator.selectSpecificContent(allContent, title, Integer.parseInt(userId), idServer);
         String pathOfFile = "./server01/" + Integer.toString(idContent) + "/";

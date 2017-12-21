@@ -23,6 +23,12 @@ public class Parser {
         return gson.fromJson(contentStringJson, ContentBO[].class);
     }
 
+    public static int getIdUser(String userStringJson){
+        Gson gson = new Gson();
+        UserBO[] userBO = gson.fromJson(userStringJson, UserBO[].class);
+        return userBO[0].getId();
+    }
+
     static String userToJsonRegister(String userName, String password){
         Gson gson = new Gson();
         UserBO userBO = new UserBO();

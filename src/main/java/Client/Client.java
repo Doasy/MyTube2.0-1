@@ -1,6 +1,11 @@
 package Client;
 
 import Client.Utils.*;
+import Client.Utils.ExceptionMessageThrower;
+import Client.Utils.FileAssembler;
+import Client.Utils.FileDissasembler;
+import Client.Utils.Parser;
+import Client.Utils.Printer;
 import Client.Utils.Reader;
 
 import java.io.*;
@@ -11,10 +16,10 @@ import java.rmi.registry.Registry;
 import java.util.List;
 import ClassesBO.*;
 
+import Client.Utils.Registrator;
 import Server.ServerInterfaceImpl.MyTubeCallbackImpl;
 import Server.ServerRemoteInterface.MyTubeCallbackInterface;
 import Server.ServerRemoteInterface.MyTubeInterface;
-
 
 
 public class Client implements ClientInterface {
@@ -61,11 +66,12 @@ public class Client implements ClientInterface {
     public void upload(String contentPath, String description) {
         String uploadResponse;
         String title = Parser.getTitleFromPath(contentPath);
+        String userStringJson = DBGets.getUser(userName);
+        int id = Parser.getIdUser(userStringJson);
 
         try{
             byte[] buffer = FileDissasembler.fileDissasembler(contentPath);
-
-            uploadResponse = stub.uploadContent(title, description, buffer, userName);
+            uploadResponse = stub.uploadContent(buffer, ip, port, Integer.toString(id), title, description);
 
         }catch(FileNotFoundException e){
             System.err.println("There's no file in this path. Please, try again");

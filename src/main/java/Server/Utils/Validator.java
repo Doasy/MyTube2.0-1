@@ -34,7 +34,6 @@ public class Validator {
 
     public static int selectSpecificContent(String contentStringJson, String title, int idUser, int idServer){
         ContentBO[] contentBOS = Server.Utils.Parser.jsonContentToArray(contentStringJson);
-        ArrayList<ContentBO> desiredContent = new ArrayList<>();
 
         for(ContentBO contentBO:contentBOS){
             if(contentBO.getTitle().equals(title) && contentBO.getServerId() == idServer && contentBO.getUploader() == idUser){
