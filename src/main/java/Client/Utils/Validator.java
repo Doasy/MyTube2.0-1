@@ -1,6 +1,6 @@
 package Client.Utils;
 
-import Client.ClassesBO.UserBO;
+import ClassesBO.UserBO;
 
 class Validator {
 

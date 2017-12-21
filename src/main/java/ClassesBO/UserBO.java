@@ -1,4 +1,4 @@
-package Server.ClassesBO;
+package ClassesBO;
 
 
 import java.io.Serializable;

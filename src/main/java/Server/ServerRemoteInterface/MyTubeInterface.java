@@ -1,12 +1,14 @@
 package Server.ServerRemoteInterface;
 
+import ClassesBO.ContentBO;
+
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.List;
 
 public interface MyTubeInterface extends Remote {
 
-    List<String> searchFromKeyword(String keyword) throws RemoteException;
+    List<ContentBO> searchFromKeyword(String keyword) throws RemoteException;
 
     String searchAll() throws RemoteException;
 

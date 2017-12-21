@@ -9,6 +9,7 @@ import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.util.List;
+import ClassesBO.*;
 
 import Server.ServerInterfaceImpl.MyTubeCallbackImpl;
 import Server.ServerRemoteInterface.MyTubeCallbackInterface;
@@ -45,14 +46,9 @@ public class Client implements ClientInterface {
     @Override
     public void search(String keyWord) throws RemoteException {
         StringBuilder listToPrint = new StringBuilder();
-        List<String> listOfSearchedItems = searchAsList(keyWord);
+        List<ContentBO> listOfSearchedItems = searchAsList(keyWord);
 
-        for(String content : listOfSearchedItems){
-            listToPrint.append(content).append("\n");
-        }
-
-        System.out.println("The list of contents with keyword " + keyWord + " is:");
-        System.out.println(listToPrint);
+        Printer.printContent(listOfSearchedItems);
     }
 
     @Override
@@ -174,9 +170,8 @@ public class Client implements ClientInterface {
         return contentStringJson;
     }
 
-    private List<String> searchAsList(String keyWord) throws RemoteException {
-        List<String> contents;
-
+    private List<ContentBO> searchAsList(String keyWord) throws RemoteException {
+        List<ContentBO> contents;
         contents = stub.searchFromKeyword(keyWord);
 
         return contents;

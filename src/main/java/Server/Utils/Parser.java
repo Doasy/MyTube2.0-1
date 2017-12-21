@@ -1,6 +1,7 @@
 package Server.Utils;
 
-import Server.ClassesBO.ServerBO;
+import ClassesBO.ContentBO;
+import ClassesBO.ServerBO;
 import com.google.gson.Gson;
 
 public class Parser {
@@ -19,5 +20,10 @@ public class Parser {
         serverBO.setPort(Integer.parseInt(port));
 
         return gson.toJson(serverBO);
+    }
+
+    public static ContentBO[] jsonContentToArray(String contentStringJson){
+        Gson gson = new Gson();
+        return gson.fromJson(contentStringJson, ContentBO[].class);
     }
 }

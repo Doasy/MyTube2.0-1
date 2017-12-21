@@ -1,6 +1,6 @@
 package Client.Utils;
 
-import Client.ClassesBO.ContentBO;
+import ClassesBO.ContentBO;
 import java.util.List;
 
 public class Printer {
@@ -23,6 +23,16 @@ public class Printer {
         }
     }
 
+
+    public static void printContent(List<ContentBO> contentList){
+        System.out.println("All content available:");
+        for(ContentBO contentBO: contentList){
+            String id = "Id: " + Integer.toString(contentBO.getId());
+            String title = "Title: " + contentBO.getTitle();
+            String description = "Description: " + contentBO.getDescription();
+            System.out.println(id + " " + title + " " + description);
+        }
+    }
     public static void optionsMenu() throws InterruptedException {
         Thread.sleep(1000);
         System.out.println("Welcome to MyTube, tell us what do you want to do.\n" +

@@ -1,7 +1,7 @@
 package Client.Utils;
 
-import Client.ClassesBO.ContentBO;
-import Client.ClassesBO.UserBO;
+import ClassesBO.ContentBO;
+import ClassesBO.UserBO;
 import com.google.gson.Gson;
 
 public class Parser {

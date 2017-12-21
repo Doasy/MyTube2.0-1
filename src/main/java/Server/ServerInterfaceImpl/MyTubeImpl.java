@@ -1,9 +1,11 @@
 package Server.ServerInterfaceImpl;
 
+import ClassesBO.ContentBO;
 import Server.ServerRemoteInterface.MyTubeCallbackInterface;
 import Server.ServerRemoteInterface.MyTubeInterface;
 import Server.Utils.DBGets;
-import com.google.gson.Gson;
+import Server.Utils.Validator;
+
 
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.*;
@@ -38,9 +40,10 @@ public class MyTubeImpl extends UnicastRemoteObject implements MyTubeInterface {
     }
 
     @Override
-    public List<String> searchFromKeyword(String keyword) throws RemoteException {
-        //TODO
-        return null;
+    public List<ContentBO> searchFromKeyword(String keyword) throws RemoteException {
+        String allContent = DBGets.getAllContent();
+        ArrayList<ContentBO> desiredContent = Validator.selectWantedContent(allContent, keyword);
+        return desiredContent;
     }
 
     @Override
@@ -55,7 +58,7 @@ public class MyTubeImpl extends UnicastRemoteObject implements MyTubeInterface {
 
     @Override
     public synchronized String uploadContent(String title, String description, byte[] fileData, String userName) throws RemoteException {
-        URL url = null;
+        URL url;
         try {
             url = new URL(UPLOADCONTENTURL);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
