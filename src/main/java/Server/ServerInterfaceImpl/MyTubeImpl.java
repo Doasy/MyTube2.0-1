@@ -48,9 +48,11 @@ public class MyTubeImpl extends UnicastRemoteObject implements MyTubeInterface {
         String contentsString = DBGets.getContentsFromUsername(username);
         ContentBO[]  contents = Parser.jsonContentToArray(contentsString);
         List<String> contentsList = new ArrayList<>();
-        for(ContentBO content : contents){
-            String contentString = "ID: " + content.getId()+" Title: "+content.getTitle()+" Description: "+content.getDescription();
-            contentsList.add(contentsString);
+        if(contents != null && contents.length!=0) {
+            for (ContentBO content : contents) {
+                String contentString = "ID: " + content.getId() + " Title: " + content.getTitle() + " Description: " + content.getDescription();
+                contentsList.add(contentsString);
+            }
         }
         return contentsList;
     }

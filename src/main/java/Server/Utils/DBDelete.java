@@ -17,7 +17,7 @@ public class DBDelete extends DBGenerics {
         String contentString = DBGets.getContentByID(id);
         ContentBO contentBO = Parser.jsonContentToContent(contentString);
         String userString = DBGets.getUserByName(userName);
-        UserBO actualUser = Parser.jsonUserToUser(userString);
+        UserBO actualUser = Parser.jsonUserToArray(userString)[0];
         if(contentBO.getUploader() == actualUser.getId()) {
             delete(DELETE_CONTENT_URL, String.valueOf(id));
         }else{

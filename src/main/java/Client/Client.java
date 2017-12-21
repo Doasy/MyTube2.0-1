@@ -95,7 +95,7 @@ public class Client implements ClientInterface {
             }else{
                 System.out.println("You can't delete any files");
             }
-        } catch (RemoteException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

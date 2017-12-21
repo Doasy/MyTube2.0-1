@@ -43,12 +43,12 @@ public class DBGets extends DBGenerics{
 
     public static String getContentsFromUsername(String userName){
         String userString = DBGets.getUserByName(userName);
-        UserBO actualUser = Parser.jsonUserToUser(userString);
+        UserBO actualUser = Parser.jsonUserToArray(userString)[0];
         return getContentsByUserID(String.valueOf(actualUser.getId()));
     }
 
     public static String getContentsByUserID(String userID){
-        String contentStringJson = get(SHOW_ALL_USERS_URL+"user/"+userID+"/");
+        String contentStringJson = get(SHOW_ALL_USERS_URL+userID+"/");
         return contentStringJson;
     }
 
