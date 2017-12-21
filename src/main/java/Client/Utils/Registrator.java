@@ -1,20 +1,23 @@
 package Client.Utils;
 
-import java.rmi.RemoteException;
-import java.rmi.registry.LocateRegistry;
-import java.rmi.registry.Registry;
 
 public class Registrator {
-    public static Registry getRegistry(String host, int port) throws RemoteException {
-        Registry reg;
-        try {
-            reg = LocateRegistry.createRegistry(port);
-            System.out.println("RMI registry created at port " + port);
-        } catch (RemoteException ex) {
-            reg = LocateRegistry.getRegistry(host, port);
-            System.err.println("RMI registry is already created on port "
-                    + port);
+
+    public static String signIn(String pass){
+        return "thing";
+    }
+
+    public static String singUp(String pass){
+        String usersRegistryJson = DBGets.getAllUsers();
+        String userName = Reader.nickNameReader();
+        boolean nameInUse = Validator.nameIsUsed(userName, usersRegistryJson);
+
+        while(nameInUse){
+            userName = Reader.userNameInUse();
+            nameInUse = Validator.nameIsUsed(userName, usersRegistryJson);
         }
-        return reg;
+
+        DBPosts.registerUser(userName, pass);
+        return userName;
     }
 }

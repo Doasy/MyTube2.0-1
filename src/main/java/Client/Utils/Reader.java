@@ -15,16 +15,6 @@ public class Reader {
         return Integer.parseInt(scanner.nextLine());
     }
 
-    public static String ipSuperServerReader(){
-        System.out.println("Provide SuperServer's IP:");
-        return scanner.nextLine();
-    }
-
-    public static int portSuperServerReader(){
-        System.out.println("Provide SuperServer's port:");
-        return Integer.parseInt(scanner.nextLine());
-    }
-
     public static String keywordReader(){
         System.out.println("Enter a keyword to search for content:");
         return scanner.nextLine();
@@ -71,6 +61,11 @@ public class Reader {
 
     public static String userLoginReader(){
         System.out.println("Do you have an account? (Yy/Nn)");
+        return scanner.nextLine();
+    }
+
+    public static String userNameInUse(){
+        System.out.println("Name already used, please use another one");
         return scanner.nextLine();
     }
 

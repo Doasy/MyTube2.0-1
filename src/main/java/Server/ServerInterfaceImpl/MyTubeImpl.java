@@ -55,12 +55,13 @@ public class MyTubeImpl extends UnicastRemoteObject implements MyTubeInterface {
         List<String> contentList = new ArrayList<>();
 
         try {
-            url = new URL("http://0bca118c.ngrok.io/MyTube2.0Web/rest/content/");
+            url = new URL(SHOWALLURL);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 
             conn.setDoOutput(true);
             conn.setRequestMethod("GET");
             conn.setRequestProperty("User-Agent", USER_AGENT);
+            conn.setRequestProperty("Accept-Language", "UTF-8");
 
             BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
             while((inputLine = br.readLine()) != null){

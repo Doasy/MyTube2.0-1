@@ -1,12 +1,11 @@
 package Client;
 
+import Client.ClassesBO.UserBO;
 import Client.Utils.*;
-import com.google.gson.
+import Client.Utils.Reader;
+import com.google.gson.*;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.net.HttpURLConnection;
+import java.io.*;
 import java.net.URL;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
@@ -19,12 +18,9 @@ import Server.ServerInterfaceImpl.MyTubeCallbackImpl;
 import Server.ServerRemoteInterface.MyTubeCallbackInterface;
 import Server.ServerRemoteInterface.MyTubeInterface;
 
-import static javax.ws.rs.core.HttpHeaders.USER_AGENT;
 
 
 public class Client implements ClientInterface {
-    private static final String SIGNUPUSERURL = "http://0bca118c.ngrok.io/MyTube2.0Web/rest/user/new/";
-    private static final String SIGNINUSERURL = "http://0bca118c.ngrok.io/MyTube2.0Web/rest/user/";
 
     private int port;
     private String ip;
@@ -214,58 +210,17 @@ public class Client implements ClientInterface {
         }
     }
 
-    private void accesWebService(){
+    private static String accesWebService(){
         String response = Reader.userLoginReader();
         String pass = Reader.userPasswordReader();
+        String name;
         if("y".equals(response.toLowerCase())){
-            signIn(pass);
+            name = Registrator.signIn(pass);
         }else{
-            singUp(pass);
+            name = Registrator.singUp(pass);
         }
-    }
 
-    private void singUp(String pass){
-        URL url;
-        try {
-            url = new URL(SIGNUPUSERURL);
-            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-
-            conn.setDoInput(true);
-            conn.setDoOutput(true);
-            conn.setRequestMethod("POST");
-            conn.setRequestProperty("Content-Type", "application/json");
-            conn.setRequestProperty("User-Agent", USER_AGENT);
-
-            String input = "{\"username\":\"ngrok\",\"password\":\"iPad 4\"}";
-
-            OutputStream os = conn.getOutputStream();
-            os.write(input.getBytes());
-            os.flush();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void signIn(String pass){
-        URL url;
-        String loginName = "\"" + userName + "\"";
-        String loginPass = "\"" + pass + "\"";
-        try {
-            url = new URL(SIGNINUSERURL);
-            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-            conn.setDoOutput(true);
-            conn.setRequestMethod("POST");
-            conn.setRequestProperty("Content-Type", "application/json");
-            conn.setRequestProperty("User-Agent", USER_AGENT);
-
-            String input = "{\"username\":" + loginName + ",\"password\":" + loginPass + "}";
-
-            OutputStream os = conn.getOutputStream();
-            os.write(input.getBytes());
-            os.flush();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        return name;
     }
 
     private void disconnectFromTheServer() {
@@ -319,11 +274,11 @@ public class Client implements ClientInterface {
         try {
             ip = Reader.ipServerReader();
             port = Reader.portServerReader();
-            String userName = Reader.nickNameReader();
+            String userName = accesWebService();
 
             final Client client = new Client(ip, port, userName);
             client.connectToTheServer();
-            client.accesWebService();
+
             options(client);
         }
         catch (Exception e) {

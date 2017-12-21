@@ -23,7 +23,7 @@ public class ServerApp {
     private final int port;
     private final String registryName;
     private final String registryURL;
-    private static final String URL = "http://0bca118c.ngrok.io/MyTube2.0Web/rest/user/new/";
+    private static final String LOGINSERVERURL = "http://localhost:8080/rest/server/new/";
 
     private static void threadLauncher() throws UnknownHostException {
         Thread theThread = new Thread();
