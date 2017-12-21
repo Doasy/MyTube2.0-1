@@ -48,7 +48,7 @@ public class DBGets extends DBGenerics{
     }
 
     public static String getContentsByUserID(String userID){
-        String contentStringJson = get(SHOW_ALL_USERS_URL+userID+"/");
+        String contentStringJson = get(SHOW_ALL_CONTENTS_URL+"user/"+userID+"/");
         return contentStringJson;
     }
 

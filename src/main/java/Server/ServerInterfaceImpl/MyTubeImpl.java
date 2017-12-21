@@ -45,13 +45,13 @@ public class MyTubeImpl extends UnicastRemoteObject implements MyTubeInterface {
 
     @Override
     public List<String> showOwnFiles(String username) throws RemoteException {
-        String contentsString = DBGets.getContentsFromUsername(username);
-        ContentBO[]  contents = Parser.jsonContentToArray(contentsString);
+        String contentsJson = DBGets.getContentsFromUsername(username);
+        ContentBO[]  contents = Parser.jsonContentToArray(contentsJson);
         List<String> contentsList = new ArrayList<>();
         if(contents != null && contents.length!=0) {
             for (ContentBO content : contents) {
                 String contentString = "ID: " + content.getId() + " Title: " + content.getTitle() + " Description: " + content.getDescription();
-                contentsList.add(contentsString);
+                contentsList.add(contentString);
             }
         }
         return contentsList;
