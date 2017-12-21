@@ -33,16 +33,25 @@ public class DBPosts {
     public static void registerServer(String ip, String port){
         try {
             HttpURLConnection conn = httpConnection(SIGNUPSERVERURL);
-            String loginJson = Client.Utils.Parser.userToJsonRegister(userName, password);
+            String loginJson = Server.Utils.Parser.serverToJsonRegister(ip, port);
 
             OutputStream os = conn.getOutputStream();
             os.write(loginJson.getBytes());
             os.flush();
             os.close();
 
-            int responseCode = conn.getResponseCode();
             BufferedReader in = new BufferedReader(
                     new InputStreamReader(conn.getInputStream()));
+            String inputLine;
+            StringBuffer response = new StringBuffer();
+
+            while ((inputLine = in.readLine()) != null) {
+                response.append(inputLine);
+            }
+            in.close();
+
+            //print result
+            System.out.println(response.toString());
             in.close();
 
         } catch (IOException ignore) {}

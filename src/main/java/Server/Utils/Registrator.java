@@ -18,7 +18,7 @@ public class Registrator {
         return reg;
     }
 
-    public static void registerServer(){
-
+    public static void registerServer(String ip, String port){
+        DBPosts.registerServer(ip, port);
     }
 }

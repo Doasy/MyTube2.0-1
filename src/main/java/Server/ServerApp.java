@@ -59,8 +59,9 @@ public class ServerApp {
         //Reads ServerApp Info
         String ownIP = Reader.ipServerReader();
         int ownPort = Reader.portServerReader();
+        int ownId = accessWebService(ownIP, ownPort);
 
-        final ServerApp s = new ServerApp(ownIP, ownPort,1, registryName);
+        final ServerApp s = new ServerApp(ownIP, ownPort, ownId, registryName);
 
         final Thread mainThread = Thread.currentThread();
         Runtime.getRuntime().addShutdownHook(new Thread() {
@@ -126,12 +127,15 @@ public class ServerApp {
         return this.stub;
     }
 
-    private int accessWebService(){
+    private static int accessWebService(String host, int port){
         String serversStringJson = DBGets.getAllServers();
         int id = Server.Utils.Validator.checkServerCredentials(host, Integer.toString(port), serversStringJson);
         if(id == -1){
-
+            Registrator.registerServer(host, Integer.toString(port));
+            serversStringJson = DBGets.getAllServers();
+            id = Server.Utils.Validator.checkServerCredentials(host, Integer.toString(port), serversStringJson);
         }
+
         return id;
     }
 }

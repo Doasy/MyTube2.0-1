@@ -1,9 +1,6 @@
 package Server.Utils;
 
-import Client.ClassesBO.ServerBO;
-import Client.ClassesBO.UserBO;
-import Client.Utils.Parser;
-
+import Server.ClassesBO.ServerBO;
 public class Validator {
 
     public static int checkServerCredentials(String ip, String port, String serversRegistryJson){

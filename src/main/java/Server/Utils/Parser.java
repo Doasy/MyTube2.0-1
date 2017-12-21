@@ -1,6 +1,6 @@
 package Server.Utils;
 
-import Client.ClassesBO.ServerBO;
+import Server.ClassesBO.ServerBO;
 import com.google.gson.Gson;
 
 public class Parser {
@@ -9,6 +9,15 @@ public class Parser {
         Gson gson = new Gson();
 
         return gson.fromJson(serversStringJson, ServerBO[].class);
+    }
 
+    public static String serverToJsonRegister(String ip, String port){
+        Gson gson = new Gson();
+        ServerBO serverBO = new ServerBO();
+
+        serverBO.setHost(ip);
+        serverBO.setPort(Integer.parseInt(port));
+
+        return gson.toJson(serverBO);
     }
 }
