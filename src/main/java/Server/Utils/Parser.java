@@ -49,6 +49,15 @@ public class Parser {
         return gson.toJson(contentBO);
     }
 
+    public static String contentToJsonRegister(String title, String description){
+        Gson gson = new Gson();
+        ContentBO contentBO = new ContentBO();
+        contentBO.setTitle(title);
+        contentBO.setDescription(description);
+
+        return gson.toJson(contentBO);
+    }
+
 
     /*------USER------*/
     public static UserBO jsonUserToUser(String userStringJson){

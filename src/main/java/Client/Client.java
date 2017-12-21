@@ -111,7 +111,7 @@ public class Client implements ClientInterface {
             String title = Reader.titleReader();
             String description = Reader.descriptionReader();
 
-            modifyResponse = stub.modifyContent(id, title, description);
+            modifyResponse = stub.modifyContent(id, title, description, userName);
             System.out.println(modifyResponse);
         }else{
             System.out.println("You can't modify any files");

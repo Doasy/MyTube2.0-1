@@ -3,11 +3,7 @@ package Server.ServerInterfaceImpl;
 import ClassesBO.ContentBO;
 import Server.ServerRemoteInterface.MyTubeCallbackInterface;
 import Server.ServerRemoteInterface.MyTubeInterface;
-import Server.Utils.DBDelete;
-import Server.Utils.DBGets;
-import Server.Utils.DBPosts;
-import Server.Utils.FileAssembler;
-import Server.Utils.Validator;
+import Server.Utils.*;
 
 
 import javax.xml.parsers.ParserConfigurationException;
@@ -49,7 +45,14 @@ public class MyTubeImpl extends UnicastRemoteObject implements MyTubeInterface {
 
     @Override
     public List<String> showOwnFiles(String username) throws RemoteException {
-        return null;
+        String contentsString = DBGets.getContentsFromUsername(username);
+        ContentBO[]  contents = Parser.jsonContentToArray(contentsString);
+        List<String> contentsList = new ArrayList<>();
+        for(ContentBO content : contents){
+            String contentString = "ID: " + content.getId()+" Title: "+content.getTitle()+" Description: "+content.getDescription();
+            contentsList.add(contentsString);
+        }
+        return contentsList;
     }
 
     @Override
@@ -81,9 +84,8 @@ public class MyTubeImpl extends UnicastRemoteObject implements MyTubeInterface {
     }
 
     @Override
-    public String modifyContent(String id, String title, String description) throws RemoteException{
-        //TODO
-        return null;
+    public String modifyContent(String id, String title, String description, String userName) throws RemoteException{
+        return DBPuts.modifyContent(id, title, description, userName);
     }
 
     @Override

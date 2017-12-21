@@ -1,5 +1,9 @@
 package Server.Utils;
 
+import ClassesBO.ContentBO;
+import ClassesBO.UserBO;
+import sun.awt.KeyboardFocusManagerPeerImpl;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -35,6 +39,17 @@ public class DBGets extends DBGenerics{
     public static String getContentByID(String id){
         String contentString = get(SHOW_ALL_CONTENTS_URL+id+"/");
         return contentString;
+    }
+
+    public static String getContentsFromUsername(String userName){
+        String userString = DBGets.getUserByName(userName);
+        UserBO actualUser = Parser.jsonUserToUser(userString);
+        return getContentsByUserID(String.valueOf(actualUser.getId()));
+    }
+
+    public static String getContentsByUserID(String userID){
+        String contentStringJson = get(SHOW_ALL_USERS_URL+"user/"+userID+"/");
+        return contentStringJson;
     }
 
     public static String getAllServers(){
