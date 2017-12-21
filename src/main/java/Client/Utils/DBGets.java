@@ -8,9 +8,7 @@ import java.net.URL;
 
 import static javax.ws.rs.core.HttpHeaders.USER_AGENT;
 
-/**
- * Created by jordi-macbookair on 21/12/2017.
- */
+
 public class DBGets {
     private static final String SHOWALLUSERSURL = "http://localhost:8080/MyTube2.0Web/rest/user/";
 
@@ -31,7 +29,6 @@ public class DBGets {
 
             inputLine = br.readLine();
             br.close();
-
         } catch (IOException e) {
             e.printStackTrace();
         }

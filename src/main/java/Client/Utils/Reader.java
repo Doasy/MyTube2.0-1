@@ -45,8 +45,8 @@ public class Reader {
         return scanner.nextLine();
     }
 
-    public static String nickNameReader(){
-        System.out.println("Hi! What's your nickname?");
+    static String usernameReader(){
+        System.out.println("Write your username");
         return scanner.nextLine();
     }
 
@@ -64,7 +64,7 @@ public class Reader {
         return scanner.nextLine();
     }
 
-    public static String userNameInUse(){
+    static String userNameInUse(){
         System.out.println("Name already used, please use another one");
         return scanner.nextLine();
     }

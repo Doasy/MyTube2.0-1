@@ -3,19 +3,19 @@ package Client.Utils;
 import Client.ClassesBO.UserBO;
 import com.google.gson.Gson;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
+import java.net.*;
 
 import static javax.ws.rs.core.HttpHeaders.USER_AGENT;
 
 
 public class DBPosts {
-    private static final String SIGNUPUSERURL = "http://localhost:8080/MyTube2.0Web/rest/user/new/";
+    private static final String SIGNUPUSERURL = "http://localhost:8080/MyTube2.0Web/rest/user/new";
 
-    private static HttpURLConnection connectionCreator(String urlString) throws IOException {
+    private static HttpURLConnection httpConnection(String urlString) throws IOException {
         URL url = new URL(urlString);
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 
@@ -32,22 +32,19 @@ public class DBPosts {
 
     public static void registerUser(String userName, String password){
         try {
-            HttpURLConnection conn = connectionCreator(SIGNUPUSERURL);
-
-            Gson gson = new Gson();
-            UserBO userBO = new UserBO();
-
-            userBO.setUsername(userName);
-            userBO.setPassword(password);
-
-            String loginJson = gson.toJson(userBO);
+            HttpURLConnection conn = httpConnection(SIGNUPUSERURL);
+            String loginJson = Parser.userToJsonRegister(userName, password);
 
             OutputStream os = conn.getOutputStream();
             os.write(loginJson.getBytes());
             os.flush();
             os.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+
+            int responseCode = conn.getResponseCode();
+            BufferedReader in = new BufferedReader(
+                    new InputStreamReader(conn.getInputStream()));
+            in.close();
+
+        } catch (IOException ignore) {}
     }
 }

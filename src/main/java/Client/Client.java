@@ -212,12 +212,11 @@ public class Client implements ClientInterface {
 
     private static String accesWebService(){
         String response = Reader.userLoginReader();
-        String pass = Reader.userPasswordReader();
         String name;
         if("y".equals(response.toLowerCase())){
-            name = Registrator.signIn(pass);
+            name = Registrator.signIn();
         }else{
-            name = Registrator.singUp(pass);
+            name = Registrator.singUp();
         }
 
         return name;

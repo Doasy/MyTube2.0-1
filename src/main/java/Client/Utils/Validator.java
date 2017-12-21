@@ -1,21 +1,28 @@
 package Client.Utils;
 
 import Client.ClassesBO.UserBO;
-import com.google.gson.Gson;
-
 
 class Validator {
 
-    static boolean nameIsUsed(String userName, String usersRegistryJson){
-        Gson gson = new Gson();
+    static boolean checkCredentials(String userName, String password, String usersRegistryJson){
+        UserBO[] userBOS = Parser.jsonUsersToArray(usersRegistryJson);
 
-        UserBO[] userBOS = gson.fromJson(usersRegistryJson, UserBO[].class);
+        for(UserBO userBO: userBOS){
+            if(userBO.getUsername().equals(userName) && userBO.getPassword().equals(password)){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    static boolean nameIsUsed(String userName, String usersRegistryJson){
+        UserBO[] userBOS = Parser.jsonUsersToArray(usersRegistryJson);
+
         for(UserBO userBO: userBOS){
             if(userBO.getUsername().equals(userName)){
                 return true;
             }
         }
-
         return false;
     }
 }
