@@ -9,9 +9,9 @@ import java.net.URL;
 import static javax.ws.rs.core.HttpHeaders.USER_AGENT;
 
 
-public class DBGets {
-    private static final String SHOWALLUSERSURL = "http://4f67e3c6.ngrok.io/MyTube2.0Web/rest/user/";
-    private static final String GET_USER = "http://4f67e3c6.ngrok.io/MyTube2.0Web/rest/user/name/";
+public class DBGets extends DBGenerics{
+    private static final String SHOWALLUSERSURL = GENERIC_URL+"user/";
+    private static final String GET_USER = GENERIC_URL+"user/name/";
 
     public static String getUser(String userName){
         URL url;
