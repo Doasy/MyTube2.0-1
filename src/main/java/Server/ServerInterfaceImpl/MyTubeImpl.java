@@ -3,6 +3,7 @@ package Server.ServerInterfaceImpl;
 import ClassesBO.ContentBO;
 import Server.ServerRemoteInterface.MyTubeCallbackInterface;
 import Server.ServerRemoteInterface.MyTubeInterface;
+import Server.Utils.DBDelete;
 import Server.Utils.DBGets;
 import Server.Utils.Validator;
 
@@ -58,6 +59,7 @@ public class MyTubeImpl extends UnicastRemoteObject implements MyTubeInterface {
 
     @Override
     public synchronized String uploadContent(String title, String description, byte[] fileData, String userName) throws RemoteException {
+        //TODO
         URL url;
         try {
             url = new URL(UPLOADCONTENTURL);
@@ -86,8 +88,7 @@ public class MyTubeImpl extends UnicastRemoteObject implements MyTubeInterface {
 
     @Override
     public String deleteContent(String id, String userName) throws RemoteException {
-
-        return null;
+        return DBDelete.deleteContent(id, userName);
     }
 
     @Override

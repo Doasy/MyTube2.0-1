@@ -1,5 +1,8 @@
 package Server.Utils;
 
+import ClassesBO.ContentBO;
+import ClassesBO.UserBO;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -9,8 +12,18 @@ import java.net.HttpURLConnection;
 public class DBDelete extends DBGenerics {
     private static final String DELETE_CONTENT_URL = GENERIC_URL + "content/";
 
-    public static void deleteContent(int id) {
-        delete(DELETE_CONTENT_URL, String.valueOf(id));
+    public static String deleteContent(String id, String userName) {
+        String response="";
+        String contentString = DBGets.getContentByID(id);
+        ContentBO contentBO = Parser.jsonContentToContent(contentString);
+        String userString = DBGets.getUserByName(userName);
+        UserBO actualUser = Parser.jsonUserToUser(userString);
+        if(contentBO.getUploader() == actualUser.getId()) {
+            delete(DELETE_CONTENT_URL, String.valueOf(id));
+        }else{
+            response = "You can't delete this file. It isn't yours.";
+        }
+        return response;
     }
 
     private static void delete(String URL, String id) {
