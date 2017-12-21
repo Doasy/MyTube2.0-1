@@ -4,9 +4,13 @@ import java.io.Serializable;
 
 public class ServerBO implements Serializable{
 
+    int id;
     int port;
     String host;
 
+    public int getId(){ return id; }
+
+    public void setId(int id){ this.id = id; }
 
     public int getPort() {
         return port;

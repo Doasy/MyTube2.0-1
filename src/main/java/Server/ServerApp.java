@@ -20,10 +20,10 @@ public class ServerApp {
     private MyTubeImpl stub;
     private Registry registry;
     private final String host;
+    private final int id;
     private final int port;
     private final String registryName;
     private final String registryURL;
-    private static final String LOGINSERVERURL = "http://localhost:8080/rest/server/new/";
 
     private static void threadLauncher() throws UnknownHostException {
         Thread theThread = new Thread();
@@ -37,7 +37,8 @@ public class ServerApp {
      * @param port port where the server listens for client petitions
      * @param registryName name of the registered service on RMI Registry
      */
-    private ServerApp(String host, int port, String registryName) throws IOException {
+    private ServerApp(String host, int port, int id, String registryName) throws IOException {
+        this.id = id;
         this.host = host;
         this.port = port;
         this.registryName = registryName;
@@ -59,7 +60,7 @@ public class ServerApp {
         String ownIP = Reader.ipServerReader();
         int ownPort = Reader.portServerReader();
 
-        final ServerApp s = new ServerApp(ownIP, ownPort, registryName);
+        final ServerApp s = new ServerApp(ownIP, ownPort,1, registryName);
 
         final Thread mainThread = Thread.currentThread();
         Runtime.getRuntime().addShutdownHook(new Thread() {
@@ -125,5 +126,12 @@ public class ServerApp {
         return this.stub;
     }
 
+    private int accessWebService(){
+        String serversStringJson = DBGets.getAllServers();
+        int id = Server.Utils.Validator.checkServerCredentials(host, Integer.toString(port), serversStringJson);
+        if(id == -1){
 
+        }
+        return id;
+    }
 }

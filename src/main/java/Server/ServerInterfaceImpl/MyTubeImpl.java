@@ -2,6 +2,7 @@ package Server.ServerInterfaceImpl;
 
 import Server.ServerRemoteInterface.MyTubeCallbackInterface;
 import Server.ServerRemoteInterface.MyTubeInterface;
+import Server.Utils.DBGets;
 import com.google.gson.Gson;
 
 import javax.xml.parsers.ParserConfigurationException;
@@ -21,7 +22,6 @@ import static javax.ws.rs.core.HttpHeaders.USER_AGENT;
 
 
 public class MyTubeImpl extends UnicastRemoteObject implements MyTubeInterface {
-    private static final String  SHOWALLURL = "http://localhost:8080/MyTube2.0Web/rest/content/";
     private static final String  UPLOADCONTENTURL = "http://0bca118c.ngrok.io/MyTube2.0Web/rest/content";
     private Set<MyTubeCallbackInterface> callbackObjects;
 
@@ -49,31 +49,8 @@ public class MyTubeImpl extends UnicastRemoteObject implements MyTubeInterface {
     }
 
     @Override
-    public List<String> searchAll() throws RemoteException {
-        URL url;
-        String inputLine;
-        List<String> contentList = new ArrayList<>();
-
-        try {
-            url = new URL(SHOWALLURL);
-            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-
-            conn.setDoOutput(true);
-            conn.setRequestMethod("GET");
-            conn.setRequestProperty("User-Agent", USER_AGENT);
-            conn.setRequestProperty("Accept-Language", "UTF-8");
-
-            BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-            while((inputLine = br.readLine()) != null){
-                contentList.add(inputLine);
-            }
-            br.close();
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        return contentList;
+    public String searchAll() throws RemoteException {
+        return DBGets.getAllContent();
     }
 
     @Override

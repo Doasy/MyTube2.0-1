@@ -1,17 +1,13 @@
 package Client;
 
-import Client.ClassesBO.UserBO;
 import Client.Utils.*;
 import Client.Utils.Reader;
-import com.google.gson.*;
 
 import java.io.*;
-import java.net.URL;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
-import java.util.ArrayList;
 import java.util.List;
 
 import Server.ServerInterfaceImpl.MyTubeCallbackImpl;
@@ -61,15 +57,8 @@ public class Client implements ClientInterface {
 
     @Override
     public void listAll() {
-        StringBuilder listToPrint = new StringBuilder();
-        List<String> listOfContents= listAllAsList();
-
-        for(String content : listOfContents){
-            listToPrint.append(content).append("\n");
-        }
-
-        System.out.println("The list of all contents is:");
-        System.out.println(listToPrint);
+        String contentsStringJson = getContent();
+        Printer.printContent(contentsStringJson);
     }
 
     @Override
@@ -173,16 +162,16 @@ public class Client implements ClientInterface {
         return stub.isValidID(fileID);
     }
 
-    private List<String> listAllAsList() {
-        List<String> contents = new ArrayList<>();
+    private String getContent() {
+        String contentStringJson = "";
 
         try {
-            contents = stub.searchAll();
+            contentStringJson = stub.searchAll();
         } catch (RemoteException e) {
             System.err.println("Problem searching files");
         }
 
-        return contents;
+        return contentStringJson;
     }
 
     private List<String> searchAsList(String keyWord) throws RemoteException {

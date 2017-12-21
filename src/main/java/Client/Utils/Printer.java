@@ -1,5 +1,6 @@
 package Client.Utils;
 
+import Client.ClassesBO.ContentBO;
 import java.util.List;
 
 public class Printer {
@@ -7,6 +8,18 @@ public class Printer {
     public static void printLists(List<String> listToPrint){
         for(String string: listToPrint){
             System.out.println(string);
+        }
+    }
+
+    public static void printContent(String contentString){
+        ContentBO[] contentBOS = Parser.jsonContentToArray(contentString);
+
+        System.out.println("All content available:");
+        for(ContentBO contentBO: contentBOS){
+            String id = "Id: " + Integer.toString(contentBO.getId());
+            String title = "Title: " + contentBO.getTitle();
+            String description = "Description: " + contentBO.getDescription();
+            System.out.println(id + " " + title + " " + description);
         }
     }
 

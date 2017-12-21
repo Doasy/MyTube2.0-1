@@ -1,10 +1,14 @@
 package Server.Utils;
 
+import Client.ClassesBO.ServerBO;
+import com.google.gson.Gson;
+
 public class Parser {
 
-    public static String getTitleFromPath(String contentPath){
-        String[] splitedPath = contentPath.split("/");
+    public static ServerBO[] jsonServerToArray(String serversStringJson){
+        Gson gson = new Gson();
 
-        return splitedPath[splitedPath.length-1];
+        return gson.fromJson(serversStringJson, ServerBO[].class);
+
     }
 }

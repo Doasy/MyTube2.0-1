@@ -9,10 +9,10 @@ import java.net.URL;
 import static javax.ws.rs.core.HttpHeaders.USER_AGENT;
 
 
-public class DBGets {
+class DBGets {
     private static final String SHOWALLUSERSURL = "http://localhost:8080/MyTube2.0Web/rest/user/";
 
-    public static String getAllUsers(){
+    static String getAllUsers(){
         URL url;
         String inputLine = "";
 

@@ -8,7 +8,7 @@ public interface MyTubeInterface extends Remote {
 
     List<String> searchFromKeyword(String keyword) throws RemoteException;
 
-    List<String> searchAll() throws RemoteException;
+    String searchAll() throws RemoteException;
 
     List<String> showOwnFiles(String username) throws RemoteException;
 

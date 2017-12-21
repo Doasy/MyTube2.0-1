@@ -17,4 +17,8 @@ public class Registrator {
         }
         return reg;
     }
+
+    public static void registerServer(){
+
+    }
 }

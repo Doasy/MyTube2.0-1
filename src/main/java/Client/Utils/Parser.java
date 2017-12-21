@@ -1,5 +1,6 @@
 package Client.Utils;
 
+import Client.ClassesBO.ContentBO;
 import Client.ClassesBO.UserBO;
 import com.google.gson.Gson;
 
@@ -15,6 +16,11 @@ public class Parser {
         Gson gson = new Gson();
 
         return gson.fromJson(usersRegistryJson, UserBO[].class);
+    }
+
+    static ContentBO[] jsonContentToArray(String contentStringJson){
+        Gson gson = new Gson();
+        return gson.fromJson(contentStringJson, ContentBO[].class);
     }
 
     static String userToJsonRegister(String userName, String password){

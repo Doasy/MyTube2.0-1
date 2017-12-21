@@ -1,16 +1,19 @@
-package Client.Utils;
+package Server.Utils;
+
+import Client.Utils.*;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
-import java.net.*;
+import java.net.HttpURLConnection;
+import java.net.URL;
 
 import static javax.ws.rs.core.HttpHeaders.USER_AGENT;
 
 
 public class DBPosts {
-    private static final String SIGNUPUSERURL = "http://localhost:8080/MyTube2.0Web/rest/user/new";
+    private static final String SIGNUPSERVERURL = "http://localhost:8080/MyTube2.0Web/rest/server/new";
 
     private static HttpURLConnection httpConnection(String urlString) throws IOException {
         URL url = new URL(urlString);
@@ -27,10 +30,10 @@ public class DBPosts {
         return conn;
     }
 
-    static void registerUser(String userName, String password){
+    public static void registerServer(String ip, String port){
         try {
-            HttpURLConnection conn = httpConnection(SIGNUPUSERURL);
-            String loginJson = Parser.userToJsonRegister(userName, password);
+            HttpURLConnection conn = httpConnection(SIGNUPSERVERURL);
+            String loginJson = Client.Utils.Parser.userToJsonRegister(userName, password);
 
             OutputStream os = conn.getOutputStream();
             os.write(loginJson.getBytes());
@@ -44,4 +47,5 @@ public class DBPosts {
 
         } catch (IOException ignore) {}
     }
+
 }

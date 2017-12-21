@@ -3,11 +3,23 @@ package Client.ClassesBO;
 import java.io.Serializable;
 
 public class ContentBO implements Serializable{
-    String title;
-    String description;
-    int uploader;
-    int serverId;
-    
+    /**
+     *
+     */
+    private static final long serialVersionUID = 1943877900492429015L;
+    private int id;
+    private String title;
+    private String description;
+    private int uploader;
+    private int serverId;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public String getTitle() {
         return title;
