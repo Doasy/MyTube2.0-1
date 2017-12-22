@@ -20,6 +20,7 @@ import Client.Utils.Registrator;
 import Server.ServerInterfaceImpl.MyTubeCallbackImpl;
 import Server.ServerRemoteInterface.MyTubeCallbackInterface;
 import Server.ServerRemoteInterface.MyTubeInterface;
+import WebService.ApiService.Content;
 
 
 public class Client implements ClientInterface {
@@ -50,7 +51,6 @@ public class Client implements ClientInterface {
 
     @Override
     public void search(String keyWord) throws RemoteException {
-        StringBuilder listToPrint = new StringBuilder();
         List<ContentBO> listOfSearchedItems = searchAsList(keyWord);
 
         Printer.printContent(listOfSearchedItems);
@@ -118,48 +118,22 @@ public class Client implements ClientInterface {
 
     @Override
     public void download() throws RemoteException{
-        String response = Reader.responseReader();
-
-        if(response.toLowerCase().equals("y")){
-            downloadWhitID();
-        }else{
-            downloadWithTitle();
-        }
-    }
-
-    //Others
-    private void downloadWhitID() throws RemoteException {
         int id = Integer.parseInt(Reader.idReader());
+        downloadContent(id);
 
-        if (isValidID(id)) {
-            downloadContent(id);
-        }else{
-            System.out.println("Invalid ID");
-        }
-    }
-
-    private void downloadWithTitle() throws RemoteException {
-        String title = Reader.titleReader();
-
-        search(title);
-        downloadWhitID();
     }
 
     private void downloadContent(int contentID) throws RemoteException{
-        String home = System.getProperty("user.home");
+        String home = System.getProperty("user.home") + "/Downloads/";
         try {
             byte[] filedata = stub.downloadContent(contentID);
-            String title = "";
-            System.out.println("Downloading in directory "+home + "/Downloads/" + title+"...");
+            String title = getTitleFromId(contentID);
+            System.out.println("Downloading in directory "+ home + title + "...");
 
             FileAssembler.fileAssembler(home, filedata, title);
         }catch(IOException e) {
             ExceptionMessageThrower.ioExceptionMessage(e);
         }
-    }
-
-    private boolean isValidID(int fileID) throws RemoteException {
-        return stub.isValidID(fileID);
     }
 
     private String getContent() {
@@ -179,6 +153,19 @@ public class Client implements ClientInterface {
         contents = stub.searchFromKeyword(keyWord);
 
         return contents;
+    }
+
+
+    private String getTitleFromId(int id)throws RemoteException{
+        String contentString;
+        contentString = stub.searchAll();
+        ContentBO[] contentBOS = Parser.jsonContentToArray(contentString);
+        for(ContentBO contentBO: contentBOS){
+            if(contentBO.getId() == id){
+                return contentBO.getTitle();
+            }
+        }
+        return null;
     }
 
     private void connectToTheServer() throws NotBoundException {

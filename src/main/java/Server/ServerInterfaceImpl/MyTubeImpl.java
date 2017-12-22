@@ -1,6 +1,7 @@
 package Server.ServerInterfaceImpl;
 
 import ClassesBO.ContentBO;
+import ClassesBO.ServerBO;
 import Server.ServerRemoteInterface.MyTubeCallbackInterface;
 import Server.ServerRemoteInterface.MyTubeInterface;
 import Server.Utils.*;
@@ -97,22 +98,23 @@ public class MyTubeImpl extends UnicastRemoteObject implements MyTubeInterface {
 
     @Override
     public byte[] downloadContent(int id) throws RemoteException {
-        String ip = "";
-        int port = 0;
         byte[] content = null;
         String name = "";
         URL url;
+        String StringContent = DBGets.getContentByID(Integer.toString(id));
+        ContentBO contentBO = Parser.jsonContentToContent(StringContent);
+        String StringServer = DBGets.getAllServers();
+        ServerBO serverBO = Validator.wantedServer(StringServer, contentBO.getServerId());
 
+
+        MyTubeInterface stub = null;
         try {
-            if(Inet4Address.getLocalHost().getHostAddress().equals(ip)){
-                content = getLocalContent(id, name);
-            }else{
-                MyTubeInterface stub = connectToTheServer(ip, port);
-                content = stub.getLocalContent(id, name);
-            }
-        } catch (UnknownHostException | NotBoundException e) {
+            stub = connectToTheServer(serverBO.getHost(), serverBO.getPort());
+            content = stub.getLocalContent(id, contentBO.getTitle());
+        } catch (NotBoundException e) {
             e.printStackTrace();
         }
+
 
         return content;
     }
