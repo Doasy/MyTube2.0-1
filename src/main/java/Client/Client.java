@@ -104,13 +104,11 @@ public class Client implements ClientInterface {
     public void modifyContent() throws RemoteException {
         String modifyResponse;
         List<String> userFiles = stub.showOwnFiles(userName);
-        if(userFiles.size() > 0){
+        if(userFiles.size() > 0) {
             Printer.printLists(userFiles);
-
             String id = Reader.idReader();
             String title = Reader.titleReader();
             String description = Reader.descriptionReader();
-
             modifyResponse = stub.modifyContent(id, title, description, userName);
             System.out.println(modifyResponse);
         }else{
