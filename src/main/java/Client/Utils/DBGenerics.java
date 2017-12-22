@@ -7,7 +7,7 @@ import java.net.URL;
 import static javax.ws.rs.core.HttpHeaders.USER_AGENT;
 
 class DBGenerics {
-    protected static final String GENERIC_URL = "http://4f67e3c6.ngrok.io/MyTube2.0Web/rest/";
+    protected static final String GENERIC_URL = "http://4ee74fcc.ngrok.io/MyTube2.0Web/rest/";
 
     protected static HttpURLConnection httpConnection(String urlString, String method) throws IOException {
         URL url = new URL(urlString);
