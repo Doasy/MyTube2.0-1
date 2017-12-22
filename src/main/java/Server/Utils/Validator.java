@@ -19,6 +19,16 @@ public class Validator {
         return -1;
     }
 
+    public static ServerBO wantedServer(String serverStringJson, int id){
+        ServerBO[] serverBOS = Server.Utils.Parser.jsonServerToArray(serverStringJson);
+
+        for(ServerBO serverBO:serverBOS){
+            if(serverBO.getId() == id){
+                return serverBO;
+            }
+        }
+        return null;
+    }
     public static ArrayList<ContentBO> selectWantedContent(String contentStringJson, String keyWord){
         ContentBO[] contentBOS = Server.Utils.Parser.jsonContentToArray(contentStringJson);
         ArrayList<ContentBO> desiredContent = new ArrayList<>();

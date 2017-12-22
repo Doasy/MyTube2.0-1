@@ -18,7 +18,7 @@ public class Parser {
         return gson.fromJson(usersRegistryJson, UserBO[].class);
     }
 
-    static ContentBO[] jsonContentToArray(String contentStringJson){
+    public static ContentBO[] jsonContentToArray(String contentStringJson){
         Gson gson = new Gson();
         return gson.fromJson(contentStringJson, ContentBO[].class);
     }
