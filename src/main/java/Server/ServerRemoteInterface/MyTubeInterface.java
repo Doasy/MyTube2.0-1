@@ -16,6 +16,8 @@ public interface MyTubeInterface extends Remote {
 
     void deleteLocalContent(String id) throws RemoteException;
 
+    void modifyLocalContent(String id, String newName, String OldName) throws RemoteException;
+
     String uploadContent(byte[] content, String ip, int port,  String userId, String title, String description) throws RemoteException;
 
     String modifyContent(String id, String title, String description, String username) throws RemoteException;

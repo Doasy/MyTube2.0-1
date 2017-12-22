@@ -20,7 +20,7 @@ import Client.Utils.Registrator;
 import Server.ServerInterfaceImpl.MyTubeCallbackImpl;
 import Server.ServerRemoteInterface.MyTubeCallbackInterface;
 import Server.ServerRemoteInterface.MyTubeInterface;
-import WebService.ApiService.Content;
+
 
 
 public class Client implements ClientInterface {
@@ -118,6 +118,7 @@ public class Client implements ClientInterface {
 
     @Override
     public void download() throws RemoteException{
+        listAll();
         int id = Integer.parseInt(Reader.idReader());
         downloadContent(id);
 

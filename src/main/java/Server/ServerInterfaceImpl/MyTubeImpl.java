@@ -88,7 +88,30 @@ public class MyTubeImpl extends UnicastRemoteObject implements MyTubeInterface {
 
     @Override
     public String modifyContent(String id, String title, String description, String userName) throws RemoteException{
+
+        String StringContent = DBGets.getContentByID(id);
+        ContentBO contentBO = Parser.jsonContentToContent(StringContent);
+        String StringServer = DBGets.getAllServers();
+        ServerBO serverBO = Validator.wantedServer(StringServer, contentBO.getServerId());
+
+
+        MyTubeInterface stub = null;
+        try {
+            stub = connectToTheServer(serverBO.getHost(), serverBO.getPort());
+            stub.modifyLocalContent(id, title, contentBO.getTitle());
+        } catch (NotBoundException e) {
+            e.printStackTrace();
+        }
         return DBPuts.modifyContent(id, title, description, userName);
+    }
+
+    @Override
+    public void modifyLocalContent(String id, String newName, String OldName) throws RemoteException{
+        try {
+            Runtime.getRuntime().exec("mv ./server01/" + id + "/" + OldName + " " + "./server01/" + id + "/" + newName);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
